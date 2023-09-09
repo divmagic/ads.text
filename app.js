@@ -1,21 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Display HTML Source Code</title>
-</head>
-<body>
-  <script>
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://one.akw.cam/", true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var sourceCode = xhr.responseText;
-        console.log(sourceCode);
-      } else if (xhr.readyState === 4) {
-        console.error("Error:", xhr.status);
+fetch('https://api.codetabs.com/v1/proxy?quest=URL_you_want_to_fetch')
+  .then(
+    function(response) {
+      if (response.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+          response.status);
+        return;
       }
-    };
-    xhr.send();
-  </script>
-</body>
-</html>
+
+      // Examine the text in the response
+      response.text().then(function(data) {
+        // data contains all the plain html of the url you previously set, 
+        // you can use it as you want, it is typeof string
+        console.log(data)
+      });
+    }
+  )
+  .catch(function(err) {
+    console.log('Fetch Error :-S', err);
+  });
